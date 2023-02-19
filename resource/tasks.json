@@ -2785,15 +2785,15 @@
             "EndOfAction",
             "WaitAfterPRTS@LoadingText",
             "WaitAfterPRTS@LoadingIcon",
-            "ClickCornerAfterPRTSImpl"
+            "ClickCornerAfterPRTS"
         ]
     },
-    "ClickCornerAfterPRTS": {
+    "ClickCornerAfterPRTSBase": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
         "ClickCorner_Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
         "Doc": "在比较卡的时候点击屏幕，或是在升级时点击屏幕以进入到结算界面，最多 5 次，间隔 3s",
-        "Doc2": "不要直接调用，使用 ClickCornerAfterPRTSImpl 通过 sub 调用以使此任务的 maxTimes 计数器生效",
+        "Doc2": "不要直接调用，使用 ClickCornerAfterPRTS 通过 sub 调用以使此任务的 maxTimes 计数器生效",
         "specificRect": [
             1000,
             120,
@@ -2818,11 +2818,11 @@
             "RestartGameAndContinue"
         ]
     },
-    "ClickCornerAfterPRTSImpl": {
+    "ClickCornerAfterPRTS": {
         "algorithm": "JustReturn",
         "action": "DoNothing",
         "sub": [
-            "ClickCornerAfterPRTS"
+            "ClickCornerAfterPRTSBase"
         ]
     },
     "EndOfAction": {
@@ -2877,8 +2877,9 @@
         "algorithm": "JustReturn",
         "preDelay": 5000
     },
-    "ClickCorner": {
-        "ClickCorner_Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
+    "ClickCornerBase": {
+        "Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
+        "Doc2": "类似 ClickCornerAfterPRTSBase，不要直接调用，而是使用 ClickCorner",
         "algorithm": "JustReturn",
         "action": "ClickRect",
         "specificRect": [
@@ -2887,15 +2888,25 @@
             270,
             10
         ],
+        "maxTimes": 5,
         "next": [
             "StartButton1",
             "StartButton2",
             "UseMedicine",
             "UseStone",
-            "NoStone"
+            "NoStone",
+            "#self@LoadingIcon",
+            "#self"
         ],
-        "onErrorNext": [
+        "exceededNext": [
             "RestartGameAndContinue"
+        ]
+    },
+    "ClickCorner": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "sub": [
+            "ClickCornerBase"
         ]
     },
     "ClickCornerThenStop": {
@@ -3135,7 +3146,7 @@
             "FightMissionFailedAndStop"
         ],
         "onErrorNext": [
-            "ClickCornerAfterPRTSImpl"
+            "ClickCornerAfterPRTS"
         ]
     },
     "FightMissionFailedAndStop": {
