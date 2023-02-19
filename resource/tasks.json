@@ -2895,7 +2895,7 @@
             "UseMedicine",
             "UseStone",
             "NoStone",
-            "#self@LoadingIcon",
+            "ClickCornerBase@LoadingIcon",
             "#self"
         ],
         "exceededNext": [
