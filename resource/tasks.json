@@ -2636,6 +2636,7 @@
     },
     "StartButton1": {
         "algorithm": "OcrDetect",
+        "action": "ClickSelf",
         "text": [
             "开始行动"
         ],
@@ -2651,7 +2652,18 @@
             "StageSNReturnFlag",
             "Stop"
         ],
-        "action": "ClickSelf",
+        "reduceOtherTimes": [
+            "ClickCornerAfterPRTS",
+            "ClickCornerAfterPRTS",
+            "ClickCornerAfterPRTS",
+            "ClickCornerAfterPRTS",
+            "ClickCornerAfterPRTS",
+            "ClickCorner",
+            "ClickCorner",
+            "ClickCorner",
+            "ClickCorner",
+            "ClickCorner"
+        ],
         "next": [
             "StartButton2",
             "UseMedicine",
@@ -2788,7 +2800,7 @@
             "ClickCornerAfterPRTS"
         ]
     },
-    "ClickCornerAfterPRTSBase": {
+    "ClickCornerAfterPRTS": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
         "ClickCorner_Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
@@ -2816,13 +2828,6 @@
         ],
         "exceededNext": [
             "RestartGameAndContinue"
-        ]
-    },
-    "ClickCornerAfterPRTS": {
-        "algorithm": "JustReturn",
-        "action": "DoNothing",
-        "sub": [
-            "ClickCornerAfterPRTSBase"
         ]
     },
     "EndOfAction": {
@@ -2877,9 +2882,9 @@
         "algorithm": "JustReturn",
         "preDelay": 5000
     },
-    "ClickCornerBase": {
+    "ClickCorner": {
         "Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
-        "Doc2": "类似 ClickCornerAfterPRTSBase，不要直接调用，而是使用 ClickCorner",
+        "Doc2": "类似 ClickCornerAfterPRTS，不要直接调用，而是使用 ClickCorner",
         "algorithm": "JustReturn",
         "action": "ClickRect",
         "specificRect": [
@@ -2895,18 +2900,11 @@
             "UseMedicine",
             "UseStone",
             "NoStone",
-            "ClickCornerBase@LoadingIcon",
+            "ClickCorner@LoadingIcon",
             "#self"
         ],
         "exceededNext": [
             "RestartGameAndContinue"
-        ]
-    },
-    "ClickCorner": {
-        "algorithm": "JustReturn",
-        "action": "ClickRect",
-        "sub": [
-            "ClickCornerBase"
         ]
     },
     "ClickCornerThenStop": {
