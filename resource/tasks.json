@@ -2785,20 +2785,22 @@
             "EndOfAction",
             "WaitAfterPRTS@Loading",
             "WaitAfterPRTS@Loading2",
-            "ClickCornerAfterPRTS_1"
+            "ClickCornerAfterPRTSImpl"
         ]
     },
     "ClickCornerAfterPRTS": {
-        "Doc": "base_task",
-        "ClickCorner_Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
         "algorithm": "JustReturn",
         "action": "ClickRect",
+        "ClickCorner_Doc": "点击屏幕右边，不会点到掉落物品，且不会关掉关卡选择的一块区域",
+        "Doc": "在比较卡的时候点击屏幕，或是在升级时点击屏幕以进入到结算界面，最多 5 次，间隔 3s",
+        "Doc2": "不要直接调用，使用 ClickCornerAfterPRTSImpl 通过 sub 调用以使此任务的 maxTimes 计数器生效",
         "specificRect": [
             1000,
             120,
             270,
             10
         ],
+        "maxTimes": 5,
         "postDelay": 3000,
         "next": [
             "EndOfAction",
@@ -2809,20 +2811,18 @@
             "NoStone",
             "WaitAfterPRTS@Loading",
             "WaitAfterPRTS@Loading2",
-            "StartUpThemes#next"
-        ]
-    },
-    "ClickCornerAfterPRTS_1": {
-        "baseTask": "ClickCornerAfterPRTS",
-        "next": [
-            "ClickCornerAfterPRTS#next",
-            "ClickCornerAfterPRTS_2"
-        ]
-    },
-    "ClickCornerAfterPRTS_2": {
-        "baseTask": "ClickCornerAfterPRTS",
-        "onErrorNext": [
+            "StartUpThemes#next",
+            "#self"
+        ],
+        "exceededNext": [
             "RestartGameAndContinue"
+        ]
+    },
+    "ClickCornerAfterPRTSImpl": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "sub": [
+            "ClickCornerAfterPRTS"
         ]
     },
     "EndOfAction": {
@@ -3136,7 +3136,7 @@
             "FightMissionFailedAndStop"
         ],
         "onErrorNext": [
-            "ClickCornerAfterPRTS_1"
+            "ClickCornerAfterPRTSImpl"
         ]
     },
     "FightMissionFailedAndStop": {
